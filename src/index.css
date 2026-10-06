@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #07070c;
+  color: #f4f4f5;
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* Respect iOS safe areas for the sticky CTAs. */
+  min-height: 100dvh;
+}
+
+/* Ambient animated backdrop — subtle, GPU-friendly radial gradients. */
+.bg-aurora {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(60% 50% at 15% 10%, rgba(168, 85, 247, 0.18), transparent 60%),
+    radial-gradient(55% 45% at 85% 20%, rgba(236, 72, 153, 0.16), transparent 60%),
+    radial-gradient(60% 60% at 50% 100%, rgba(56, 189, 248, 0.14), transparent 60%),
+    #07070c;
+}
+
+/* Reusable gradient text. */
+.text-gradient {
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Thin scrollbar on desktop, left alone on mobile. */
+@media (pointer: fine) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #2a2a37 transparent;
+  }
+}
+
+/* Honor reduced-motion preferences across the app. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Clear, consistent keyboard focus ring. */
+:focus-visible {
+  outline: 2px solid #f0abfc;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
