@@ -8,78 +8,74 @@ interface PassportCardProps {
   quizName: string;
 }
 
+/** Fixed data color so the card reads cleanly in light mode and as a screenshot. */
+const DATA_COLOR = '#2a3356';
+
 /**
- * "Your Internet Passport" — the screenshot-optimized card. Fixed, compact
- * layout with high contrast so it reads well as an image in a group chat.
+ * "Your Internet Passport" — the screenshot-optimized card. Light, editorial,
+ * high contrast so it reads well as an image in a group chat.
  */
 const PassportCard = forwardRef<HTMLDivElement, PassportCardProps>(function PassportCard(
   { result, quizName },
   ref,
 ) {
   const { tier, score, traits } = result;
-  // Show up to 3 stats on the card to keep it clean.
   const cardStats = traits.slice(0, 3);
 
   return (
     <div
       ref={ref}
-      className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${tier.gradient} p-[2px] shadow-2xl`}
+      className="overflow-hidden rounded-3xl border border-edge bg-white p-2 shadow-[0_24px_60px_-28px_rgba(27,26,22,0.3)]"
     >
-      <div className="relative rounded-[22px] bg-ink/95 p-6 backdrop-blur">
-        {/* Header row */}
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">
-            Internet Passport
-          </span>
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">
-            {SITE_NAME}
-          </span>
-        </div>
+      {/* Header label */}
+      <div className="flex items-center justify-between px-4 pt-3">
+        <span className="text-xs font-semibold uppercase tracking-[0.18em] text-muted">
+          Internet Passport
+        </span>
+        <span className="text-xs font-semibold uppercase tracking-[0.18em] text-muted">
+          {SITE_NAME}
+        </span>
+      </div>
 
-        {/* Identity */}
-        <div className="mt-5 flex items-center gap-4">
-          <div
-            className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl text-4xl"
-            style={{ backgroundColor: `${tier.accent}22` }}
-            aria-hidden="true"
-          >
-            {tier.emoji}
-          </div>
+      {/* Identity block (tinted with the tier accent) */}
+      <div
+        className="mt-2 rounded-2xl p-5"
+        style={{ backgroundColor: `${tier.accent}22` }}
+      >
+        <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
-            <div
-              className="truncate text-2xl font-bold leading-tight"
-              style={{ color: tier.accent }}
+            <span
+              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold text-white"
+              style={{ backgroundColor: DATA_COLOR }}
             >
-              {tier.title}
-            </div>
-            <div className="mt-0.5 text-sm text-zinc-400">{quizName}</div>
+              <span aria-hidden="true">{tier.emoji}</span> {quizName}
+            </span>
+            <h3 className="mt-3 text-2xl font-bold leading-tight text-ink">{tier.title}</h3>
           </div>
-          <div className="ml-auto text-right">
-            <div
-              className="font-mono text-4xl font-bold leading-none tabular-nums"
-              style={{ color: tier.accent }}
-            >
+          <div className="shrink-0 text-right">
+            <div className="font-mono text-4xl font-bold leading-none tabular-nums text-ink">
               {score}
               <span className="text-xl">%</span>
             </div>
+            <div className="mt-1 text-[10px] font-semibold uppercase tracking-wide text-muted">
+              online
+            </div>
           </div>
         </div>
+        <p className="mt-3 text-sm leading-relaxed text-ink/80">{tier.description}</p>
+      </div>
 
-        {/* Description */}
-        <p className="mt-4 text-sm leading-relaxed text-zinc-200">{tier.description}</p>
+      {/* Stats */}
+      <div className="space-y-3 p-4">
+        {cardStats.map((t) => (
+          <StatBar key={t.id} label={t.label} value={t.value} accent={DATA_COLOR} blocks />
+        ))}
+      </div>
 
-        {/* Stats */}
-        <div className="mt-5 space-y-3">
-          {cardStats.map((t) => (
-            <StatBar key={t.id} label={t.label} value={t.value} accent={tier.accent} blocks />
-          ))}
-        </div>
-
-        {/* Footer */}
-        <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-3 text-xs text-zinc-500">
-          <span>How Chronically Online Are You?</span>
-          <span className="font-mono">{SITE_NAME.toLowerCase()}</span>
-        </div>
+      {/* Footer */}
+      <div className="flex items-center justify-between border-t border-edge px-4 py-3 text-xs text-muted">
+        <span>How Chronically Online Are You?</span>
+        <span className="font-mono">{SITE_NAME.toLowerCase()}</span>
       </div>
     </div>
   );

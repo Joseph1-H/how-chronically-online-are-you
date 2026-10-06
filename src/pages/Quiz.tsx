@@ -107,7 +107,7 @@ export default function Quiz() {
     return (
       <main className="mx-auto flex min-h-[100dvh] max-w-xl flex-col items-center justify-center gap-4 px-6 text-center">
         <h1 className="text-2xl font-bold">Quiz not found</h1>
-        <Link to="/" className="text-fuchsia-400 underline">
+        <Link to="/" className="font-semibold text-forest underline">
           ← Back home
         </Link>
       </main>
@@ -122,12 +122,12 @@ export default function Quiz() {
       <div className="mb-6 flex items-center justify-between gap-4">
         <Link
           to="/"
-          className="text-sm font-medium text-zinc-400 transition-colors hover:text-zinc-100"
+          className="text-sm font-medium text-muted transition-colors hover:text-ink"
           aria-label="Exit quiz and return home"
         >
           ← Exit
         </Link>
-        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
+        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted">
           {quiz.name}
         </span>
       </div>
@@ -141,7 +141,7 @@ export default function Quiz() {
           leaving ? 'translate-y-1 opacity-0' : 'animate-fade-up'
         }`}
       >
-        <h1 className="text-pretty text-2xl font-bold leading-snug sm:text-3xl">
+        <h1 className="text-pretty text-2xl font-bold leading-snug text-ink sm:text-3xl">
           {question.prompt}
         </h1>
 
@@ -156,21 +156,21 @@ export default function Quiz() {
                 aria-pressed={selected}
                 className={`group flex w-full items-center gap-4 rounded-2xl border p-4 text-left transition-all duration-150 active:scale-[0.99] ${
                   selected
-                    ? 'border-fuchsia-400 bg-fuchsia-500/15'
-                    : 'border-white/10 bg-white/[0.03] hover:border-white/25 hover:bg-white/[0.06]'
+                    ? 'border-forest bg-forest/5'
+                    : 'border-edge bg-white hover:border-ink/30'
                 }`}
               >
                 <span
                   className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border text-sm font-bold transition-colors ${
                     selected
-                      ? 'border-fuchsia-400 bg-fuchsia-500 text-white'
-                      : 'border-white/15 bg-white/5 text-zinc-300 group-hover:text-white'
+                      ? 'border-forest bg-forest text-cream'
+                      : 'border-edge bg-cream text-muted group-hover:text-ink'
                   }`}
                   aria-hidden="true"
                 >
                   {LETTERS[i]}
                 </span>
-                <span className="text-base font-medium text-zinc-100 sm:text-lg">{opt.label}</span>
+                <span className="text-base font-medium text-ink sm:text-lg">{opt.label}</span>
               </button>
             );
           })}
@@ -183,11 +183,11 @@ export default function Quiz() {
           type="button"
           onClick={goBack}
           disabled={index === 0}
-          className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-400 transition-colors hover:text-zinc-100 disabled:cursor-not-allowed disabled:opacity-0"
+          className="rounded-lg px-3 py-2 text-sm font-medium text-muted transition-colors hover:text-ink disabled:cursor-not-allowed disabled:opacity-0"
         >
           ← Back
         </button>
-        <p className="text-xs text-zinc-600">Tip: press 1–4 or A–D</p>
+        <p className="text-xs text-muted">Tip: press 1–4 or A–D</p>
       </div>
     </main>
   );

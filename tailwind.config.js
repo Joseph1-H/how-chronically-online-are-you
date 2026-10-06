@@ -16,9 +16,16 @@ export default {
         mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       colors: {
-        ink: '#07070c',
-        panel: '#111119',
-        edge: '#23232f',
+        // Editorial light palette (12axes-inspired).
+        cream: '#f4f2ea',
+        ink: '#1b1a16',
+        muted: '#6c6b61',
+        forest: '#1c3b2e',
+        'forest-dark': '#16311f',
+        brick: '#8f2d2d',
+        edge: '#e4e0d3',
+        lav: '#e5e8f5',
+        'lav-ink': '#2a3356',
       },
       keyframes: {
         'fade-up': {

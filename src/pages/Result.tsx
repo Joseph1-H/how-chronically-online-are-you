@@ -12,6 +12,9 @@ import PassportCard from '../components/PassportCard';
 
 type Toast = { msg: string } | null;
 
+/** Fixed data color for the score ring + stat bars (clean on the light theme). */
+const DATA_COLOR = '#2a3356';
+
 export default function Result() {
   const { slug } = useParams();
   const [params] = useSearchParams();
@@ -77,33 +80,35 @@ export default function Result() {
   return (
     <main className="mx-auto flex min-h-[100dvh] max-w-xl flex-col px-5 pb-16 pt-8">
       {/* Score reveal */}
-      <ScoreReveal score={result.score} accent={tier.accent} />
+      <ScoreReveal score={result.score} accent={DATA_COLOR} />
 
       {/* Archetype */}
       <div
         className="mt-6 text-center animate-fade-up"
         style={{ animationDelay: '400ms' }}
       >
-        <div className="text-5xl" aria-hidden="true">
+        <div
+          className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl text-4xl"
+          style={{ backgroundColor: `${tier.accent}22` }}
+          aria-hidden="true"
+        >
           {tier.emoji}
         </div>
-        <h1
-          className={`mt-2 bg-gradient-to-r ${tier.gradient} bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-4xl`}
-        >
+        <h1 className="mt-4 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
           {tier.title}
         </h1>
-        <p className="mx-auto mt-3 max-w-md text-pretty text-base text-zinc-300">
+        <p className="mx-auto mt-3 max-w-md text-pretty text-base text-muted">
           {tier.description}
         </p>
       </div>
 
       {/* Full stat breakdown */}
       <section
-        className="mt-8 animate-fade-up rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+        className="mt-8 animate-fade-up rounded-2xl border border-edge bg-white p-5"
         style={{ animationDelay: '500ms' }}
         aria-label="Your internet stats"
       >
-        <h2 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-zinc-400">
+        <h2 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-muted">
           Your internet stats
         </h2>
         <div className="space-y-4">
@@ -112,7 +117,7 @@ export default function Result() {
               key={t.id}
               label={t.label}
               value={t.value}
-              accent={tier.accent}
+              accent={DATA_COLOR}
               delay={600 + i * 120}
             />
           ))}
@@ -121,11 +126,11 @@ export default function Result() {
 
       {/* Internet Passport (screenshot card) */}
       <section className="mt-8 animate-fade-up" style={{ animationDelay: '560ms' }}>
-        <h2 className="mb-3 text-center text-sm font-semibold uppercase tracking-[0.15em] text-zinc-400">
+        <h2 className="mb-3 text-center text-sm font-semibold uppercase tracking-[0.15em] text-muted">
           Your Internet Passport
         </h2>
         <PassportCard ref={cardRef} result={result} quizName={quiz.name} />
-        <p className="mt-2 text-center text-xs text-zinc-500">📸 Screenshot this to share it</p>
+        <p className="mt-2 text-center text-xs text-muted">📸 Screenshot this to share it</p>
       </section>
 
       {/* Share actions */}
@@ -133,41 +138,41 @@ export default function Result() {
         <button
           type="button"
           onClick={onShare}
-          className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-fuchsia-500 via-pink-500 to-violet-500 px-6 py-4 text-lg font-bold text-white shadow-lg shadow-fuchsia-500/25 transition-transform duration-150 hover:scale-[1.02] active:scale-95"
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-forest px-6 py-4 text-lg font-semibold text-cream transition-colors duration-150 hover:bg-forest-dark active:scale-[0.99]"
         >
-          SHARE RESULT
+          Share result
         </button>
         <div className="grid grid-cols-2 gap-3">
           <button
             type="button"
             onClick={onCopyLink}
-            className="rounded-2xl border border-white/15 bg-white/5 px-6 py-3.5 font-semibold text-zinc-100 transition-colors hover:bg-white/10"
+            className="rounded-full border border-ink/15 bg-white px-6 py-3.5 font-semibold text-ink transition-colors hover:border-ink/40"
           >
-            COPY LINK
+            Copy link
           </button>
           <Link
             to={`/quiz/${quiz.slug}`}
             onClick={() => trackEvent('quiz_retaken', { quiz: quiz.slug })}
-            className="flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-6 py-3.5 font-semibold text-zinc-100 transition-colors hover:bg-white/10"
+            className="flex items-center justify-center rounded-full border border-ink/15 bg-white px-6 py-3.5 font-semibold text-ink transition-colors hover:border-ink/40"
           >
-            RETAKE
+            Retake
           </Link>
         </div>
       </section>
 
       {/* Viral loop */}
       <section
-        className="mt-10 animate-fade-up rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-transparent p-6 text-center"
+        className="mt-10 animate-fade-up rounded-2xl border border-edge bg-lav p-6 text-center"
         style={{ animationDelay: '680ms' }}
       >
-        <h2 className="text-xl font-bold">Think you're more online than me?</h2>
+        <h2 className="text-xl font-bold text-lav-ink">Think you&rsquo;re more online than me?</h2>
         <a
           href={quizStartUrl}
-          className="mt-4 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 font-bold text-ink transition-transform duration-150 hover:scale-[1.03] active:scale-95"
+          className="mt-4 inline-flex items-center gap-2 rounded-full bg-lav-ink px-6 py-3 font-semibold text-white transition-transform duration-150 hover:scale-[1.03] active:scale-95"
         >
-          CHALLENGE A FRIEND →
+          Challenge a friend →
         </a>
-        <p className="mt-4 text-sm text-zinc-400">
+        <p className="mt-4 text-sm text-lav-ink/70">
           Send this to the most chronically online person you know.
         </p>
       </section>
@@ -175,8 +180,8 @@ export default function Result() {
       {/* Support / monetization placeholder */}
       {SUPPORT_URL && (
         <section className="mt-8 text-center animate-fade-up" style={{ animationDelay: '720ms' }}>
-          <p className="text-sm text-zinc-300">❤️ Enjoyed the quiz?</p>
-          <p className="mx-auto mt-1 max-w-sm text-xs text-zinc-500">
+          <p className="text-sm text-ink">❤️ Enjoyed the quiz?</p>
+          <p className="mx-auto mt-1 max-w-sm text-xs text-muted">
             If this made you laugh, you can support the project.
           </p>
           <a
@@ -184,15 +189,15 @@ export default function Result() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={onSupport}
-            className="mt-3 inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-semibold text-zinc-100 transition-colors hover:bg-white/10"
+            className="mt-3 inline-flex items-center gap-2 rounded-full border border-ink/15 bg-white px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:border-ink/40"
           >
-            SUPPORT THE PROJECT
+            Support the project
           </a>
         </section>
       )}
 
       {/* Footer */}
-      <footer className="mt-12 text-center text-xs text-zinc-600">
+      <footer className="mt-12 text-center text-xs text-muted">
         <p>
           {SITE_NAME} · Just-for-fun — not a psychological assessment. Your answers never leave your
           device.
@@ -206,7 +211,7 @@ export default function Result() {
           aria-live="polite"
           className="pointer-events-none fixed inset-x-0 bottom-6 z-50 flex justify-center px-4"
         >
-          <div className="rounded-full border border-white/15 bg-zinc-900/95 px-5 py-2.5 text-sm font-medium text-zinc-100 shadow-xl backdrop-blur animate-pop-in">
+          <div className="rounded-full border border-edge bg-ink px-5 py-2.5 text-sm font-medium text-cream shadow-xl animate-pop-in">
             {toast.msg}
           </div>
         </div>

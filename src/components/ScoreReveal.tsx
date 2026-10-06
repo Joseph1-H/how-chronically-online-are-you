@@ -55,7 +55,7 @@ export default function ScoreReveal({ score, accent }: ScoreRevealProps) {
           cy="100"
           r={RADIUS}
           fill="none"
-          stroke="rgba(255,255,255,0.08)"
+          stroke="rgba(27,26,22,0.1)"
           strokeWidth="14"
         />
         <circle
@@ -72,7 +72,7 @@ export default function ScoreReveal({ score, accent }: ScoreRevealProps) {
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">
+        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted">
           Your score
         </span>
         <span

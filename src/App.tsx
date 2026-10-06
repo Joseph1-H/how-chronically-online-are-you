@@ -17,7 +17,7 @@ function ScrollToTop() {
 export default function App() {
   return (
     <div className="relative min-h-[100dvh]">
-      <div className="bg-aurora" aria-hidden="true" />
+      <div className="bg-paper" aria-hidden="true" />
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Landing />} />
