@@ -9,3 +9,6 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 .idea
+
+# TS incremental build cache
+*.tsbuildinfo
