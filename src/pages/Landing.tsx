@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { getFeaturedQuiz } from '../data/quizzes';
-import { SITE_NAME, SUPPORT_URL } from '../config/constants';
-import { trackEvent } from '../lib/analytics';
+import { SITE_NAME } from '../config/constants';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
+import CryptoDonate from '../components/CryptoDonate';
 
 /** Small circular progress ring for the static example-result card. */
 function MiniRing({ value }: { value: number }) {
@@ -273,24 +273,12 @@ export default function Landing() {
             </div>
             <h2 className="mt-3 text-2xl font-bold text-lav-ink sm:text-3xl">Enjoyed the quiz?</h2>
             <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-lav-ink/80">
-              This quiz is free, with no ads and no tracking. If it made you laugh, a small tip
+              This quiz is free, with no ads and no tracking. If it made you laugh, a crypto tip
               helps keep it online and pays for building new quizzes.
             </p>
-            {SUPPORT_URL ? (
-              <a
-                href={SUPPORT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() =>
-                  trackEvent('support_clicked', { quiz: quiz.slug, from: 'landing-section' })
-                }
-                className="mt-6 inline-flex items-center gap-2 rounded-full bg-forest px-7 py-3.5 text-base font-semibold text-cream transition-colors hover:bg-forest-dark"
-              >
-                <span aria-hidden="true">❤️</span> Support the project
-              </a>
-            ) : (
-              <p className="mt-6 text-sm text-lav-ink/60">A support link is coming soon.</p>
-            )}
+            <div className="mt-6">
+              <CryptoDonate from="landing-section" quizSlug={quiz.slug} />
+            </div>
           </div>
         </section>
 
@@ -315,17 +303,13 @@ export default function Landing() {
           <p>
             {SITE_NAME} · Just-for-fun — not a psychological assessment. No login, no tracking.
           </p>
-          {SUPPORT_URL && (
-            <a
-              href={SUPPORT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackEvent('support_clicked', { quiz: quiz.slug, from: 'landing' })}
-              className="inline-flex items-center gap-2 rounded-full border border-ink/15 px-4 py-2 font-medium text-ink transition-colors hover:border-ink/40"
-            >
-              <span aria-hidden="true">❤️</span> Support the project
-            </a>
-          )}
+          <button
+            type="button"
+            onClick={() => scrollToId('support')}
+            className="inline-flex items-center gap-2 rounded-full border border-ink/15 px-4 py-2 font-medium text-ink transition-colors hover:border-ink/40"
+          >
+            <span aria-hidden="true">❤️</span> Support the project
+          </button>
         </div>
       </footer>
     </div>

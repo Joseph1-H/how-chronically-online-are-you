@@ -12,8 +12,29 @@ export const SITE_NAME = 'QuizLab';
 export const SITE_URL = 'https://onlinetest.vercel.app';
 
 /**
- * Donation / support link. Drop in a Ko-fi, Buy Me a Coffee, Stripe, or
- * GitHub Sponsors URL here to enable the "Support the project" button.
- * Leave empty ('') to hide the support section entirely.
+ * Optional hosted donation link (Ko-fi, Buy Me a Coffee, Stripe, GitHub
+ * Sponsors…). Leave '' if you only accept crypto. When set, it renders as a
+ * button alongside the crypto options.
  */
-export const SUPPORT_URL = 'https://buymeacoffee.com/caesarjj';
+export const SUPPORT_URL = '';
+
+/** A crypto wallet people can send a tip to. */
+export interface CryptoWallet {
+  /** Ticker, e.g. 'ETH', 'BTC', 'SOL', 'USDC'. */
+  coin: string;
+  /** Network / display name, e.g. 'Ethereum (ERC-20)'. */
+  label: string;
+  /** The receiving address. */
+  address: string;
+}
+
+/**
+ * Crypto donation wallets. Add one entry per coin and the Support section
+ * renders each with a copy-to-clipboard button. Leave the array empty to show
+ * a "coming soon" note instead.
+ *
+ * Example:
+ *   { coin: 'ETH', label: 'Ethereum (ERC-20)', address: '0xYOUR_ADDRESS' },
+ *   { coin: 'BTC', label: 'Bitcoin', address: 'bc1YOUR_ADDRESS' },
+ */
+export const CRYPTO_WALLETS: CryptoWallet[] = [];

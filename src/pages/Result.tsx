@@ -4,7 +4,8 @@ import { getQuiz } from '../data/quizzes';
 import { computeResult, decodeAnswers, hasEnoughAnswers } from '../lib/scoring';
 import { buildShare, copyText, shareResult } from '../lib/share';
 import { trackEvent } from '../lib/analytics';
-import { SITE_NAME, SUPPORT_URL } from '../config/constants';
+import { CRYPTO_WALLETS, SITE_NAME, SUPPORT_URL } from '../config/constants';
+import CryptoDonate from '../components/CryptoDonate';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
 import ScoreReveal from '../components/ScoreReveal';
 import StatBar from '../components/StatBar';
@@ -71,10 +72,6 @@ export default function Result() {
     const ok = await copyText(resultUrl);
     trackEvent('result_copied', { quiz: quiz!.slug });
     flash(ok ? 'Link copied!' : 'Could not copy link.');
-  }
-
-  function onSupport() {
-    trackEvent('support_clicked', { quiz: quiz!.slug });
   }
 
   return (
@@ -203,21 +200,15 @@ export default function Result() {
       </section>
 
       {/* Support / monetization placeholder */}
-      {SUPPORT_URL && (
+      {(CRYPTO_WALLETS.length > 0 || SUPPORT_URL) && (
         <section className="mt-8 text-center animate-fade-up" style={{ animationDelay: '720ms' }}>
           <p className="text-sm text-ink">❤️ Enjoyed the quiz?</p>
           <p className="mx-auto mt-1 max-w-sm text-xs text-muted">
-            If this made you laugh, you can support the project.
+            A crypto tip keeps it online, ad-free, and funds new quizzes.
           </p>
-          <a
-            href={SUPPORT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={onSupport}
-            className="mt-3 inline-flex items-center gap-2 rounded-full border border-ink/15 bg-white px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:border-ink/40"
-          >
-            Support the project
-          </a>
+          <div className="mt-4">
+            <CryptoDonate from="result" quizSlug={quiz.slug} />
+          </div>
         </section>
       )}
 
