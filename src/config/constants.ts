@@ -16,4 +16,4 @@ export const SITE_URL = 'https://onlinetest.vercel.app';
  * GitHub Sponsors URL here to enable the "Support the project" button.
  * Leave empty ('') to hide the support section entirely.
  */
-export const SUPPORT_URL = 'https://ko-fi.com/yourname';
+export const SUPPORT_URL = 'https://buymeacoffee.com/caesarjj';
