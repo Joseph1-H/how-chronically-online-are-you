@@ -30,11 +30,15 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 /**
- * Pick the questions for one attempt: a random subset of `attemptLength`,
- * in random order. With no `questionsPerQuiz` set this just shuffles them all.
+ * Pick the questions for one attempt: a random subset of `attemptLength`, in
+ * random order, each with its answer options shuffled too — so the "most
+ * online" choice isn't always in the same slot. Scoring/encoding key off each
+ * option's id (canonical order), so shuffling display changes nothing there.
  */
 export function pickAttemptQuestions(quiz: Quiz): Question[] {
-  return shuffle(quiz.questions).slice(0, attemptLength(quiz));
+  return shuffle(quiz.questions)
+    .slice(0, attemptLength(quiz))
+    .map((q) => ({ ...q, options: shuffle(q.options) }));
 }
 
 /** Dominant-trait → signature move (falls back to a generic habit). */
