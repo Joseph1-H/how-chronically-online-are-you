@@ -31,6 +31,7 @@ const NAV = [
   { label: 'How it works', id: 'how' },
   { label: 'Archetypes', id: 'archetypes' },
   { label: 'FAQ', id: 'faq' },
+  { label: 'Support', id: 'support' },
 ];
 
 /** Smooth-scroll to an on-page section (hash anchors would clash with the router). */
@@ -261,6 +262,35 @@ export default function Landing() {
                 <p className="mt-2 text-sm leading-relaxed text-muted">{item.a}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Support / donate */}
+        <section id="support" className="scroll-mt-20 border-t border-edge py-16">
+          <div className="mx-auto max-w-2xl rounded-3xl border border-edge bg-lav p-8 text-center">
+            <div className="text-4xl" aria-hidden="true">
+              ❤️
+            </div>
+            <h2 className="mt-3 text-2xl font-bold text-lav-ink sm:text-3xl">Enjoyed the quiz?</h2>
+            <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-lav-ink/80">
+              This quiz is free, with no ads and no tracking. If it made you laugh, a small tip
+              helps keep it online and pays for building new quizzes.
+            </p>
+            {SUPPORT_URL ? (
+              <a
+                href={SUPPORT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() =>
+                  trackEvent('support_clicked', { quiz: quiz.slug, from: 'landing-section' })
+                }
+                className="mt-6 inline-flex items-center gap-2 rounded-full bg-forest px-7 py-3.5 text-base font-semibold text-cream transition-colors hover:bg-forest-dark"
+              >
+                <span aria-hidden="true">❤️</span> Support the project
+              </a>
+            ) : (
+              <p className="mt-6 text-sm text-lav-ink/60">A support link is coming soon.</p>
+            )}
           </div>
         </section>
 
