@@ -28,10 +28,18 @@ function MiniRing({ value }: { value: number }) {
 }
 
 const NAV = [
-  { label: 'How it works', href: '#how' },
-  { label: 'Archetypes', href: '#archetypes' },
-  { label: 'FAQ', href: '#faq' },
+  { label: 'How it works', id: 'how' },
+  { label: 'Archetypes', id: 'archetypes' },
+  { label: 'FAQ', id: 'faq' },
 ];
+
+/** Smooth-scroll to an on-page section (hash anchors would clash with the router). */
+function scrollToId(id: string) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+}
 
 const STEPS = [
   { n: '01', title: 'Answer 20 questions', body: 'Quick multiple-choice. Memes, slang, screen time, the lot.' },
@@ -79,13 +87,14 @@ export default function Landing() {
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
           {NAV.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => scrollToId(item.id)}
               className="text-sm font-medium text-muted transition-colors hover:text-ink"
             >
               {item.label}
-            </a>
+            </button>
           ))}
         </nav>
 
@@ -120,12 +129,13 @@ export default function Landing() {
               >
                 Take the test <span aria-hidden="true">→</span>
               </Link>
-              <a
-                href="#archetypes"
+              <button
+                type="button"
+                onClick={() => scrollToId('archetypes')}
                 className="inline-flex items-center gap-2 rounded-full border border-ink/15 px-7 py-3.5 text-base font-semibold text-ink transition-colors hover:border-ink/40"
               >
                 See the archetypes
-              </a>
+              </button>
             </div>
 
             <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
