@@ -47,12 +47,17 @@ const PassportCard = forwardRef<HTMLDivElement, PassportCardProps>(function Pass
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
             <span
-              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold text-white"
+              className="inline-block rounded-full px-3 py-1 text-xs font-semibold text-white"
               style={{ backgroundColor: DATA_COLOR }}
             >
-              <span aria-hidden="true">{tier.emoji}</span> {quizName}
+              {quizName}
             </span>
-            <h3 className="mt-3 text-2xl font-bold leading-tight text-ink">{tier.title}</h3>
+            <h3 className="mt-3 text-2xl font-bold leading-tight text-ink">
+              <span className="mr-1.5" aria-hidden="true">
+                {tier.emoji}
+              </span>
+              {tier.title}
+            </h3>
           </div>
           <div className="shrink-0 text-right">
             <div className="font-mono text-4xl font-bold leading-none tabular-nums text-ink">
@@ -73,11 +78,13 @@ const PassportCard = forwardRef<HTMLDivElement, PassportCardProps>(function Pass
           { tag: 'Signature move', value: result.signature.label, emoji: result.signature.emoji },
           { tag: 'Spirit platform', value: result.platform.label, emoji: result.platform.emoji },
         ].map((row) => (
-          <div key={row.tag} className="rounded-2xl border border-edge bg-white p-3">
+          <div key={row.tag} className="rounded-2xl border border-edge bg-white px-3 py-3.5">
             <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-wide text-muted">
               <span>{row.emoji}</span> {row.tag}
             </div>
-            <div className="mt-0.5 truncate text-sm font-semibold text-ink">{row.value}</div>
+            <div className="mt-1 overflow-hidden text-ellipsis whitespace-nowrap text-sm font-semibold leading-6 text-ink">
+              {row.value}
+            </div>
           </div>
         ))}
       </div>
