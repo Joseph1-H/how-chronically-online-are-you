@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://chronically-online.example.com/sitemap.xml
+Sitemap: https://joseph1-h.github.io/how-chronically-online-are-you/sitemap.xml
