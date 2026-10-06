@@ -1,7 +1,9 @@
 import { forwardRef } from 'react';
 import type { QuizResult } from '../types/quiz';
-import { SITE_NAME } from '../config/constants';
+import { SITE_NAME, SITE_URL } from '../config/constants';
 import StatBar from './StatBar';
+
+const SITE_HOST = SITE_URL.replace(/^https?:\/\//, '').replace(/\/$/, '');
 
 interface PassportCardProps {
   result: QuizResult;
@@ -87,10 +89,10 @@ const PassportCard = forwardRef<HTMLDivElement, PassportCardProps>(function Pass
         ))}
       </div>
 
-      {/* Footer */}
-      <div className="flex items-center justify-between border-t border-edge px-4 py-3 text-xs text-muted">
-        <span>How Chronically Online Are You?</span>
-        <span className="font-mono">{SITE_NAME.toLowerCase()}</span>
+      {/* Footer — carries the site link into the screenshot */}
+      <div className="flex items-center justify-between border-t border-edge px-4 py-3 text-xs">
+        <span className="text-muted">Take the quiz · {SITE_NAME}</span>
+        <span className="font-mono font-semibold text-forest">{SITE_HOST}</span>
       </div>
     </div>
   );

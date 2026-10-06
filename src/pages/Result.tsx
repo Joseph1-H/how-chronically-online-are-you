@@ -2,7 +2,8 @@ import { useMemo, useRef, useState } from 'react';
 import { Link, Navigate, useParams, useSearchParams } from 'react-router-dom';
 import { getQuiz } from '../data/quizzes';
 import { computeResult, decodeAnswers, hasEnoughAnswers } from '../lib/scoring';
-import { buildShare, copyText, shareResult } from '../lib/share';
+import { buildShare, copyText, shareImage, shareResult } from '../lib/share';
+import { captureNode } from '../lib/screenshot';
 import { trackEvent } from '../lib/analytics';
 import { CRYPTO_WALLETS, SITE_NAME, SUPPORT_URL } from '../config/constants';
 import CryptoDonate from '../components/CryptoDonate';
@@ -23,6 +24,7 @@ export default function Result() {
 
   const cardRef = useRef<HTMLDivElement>(null);
   const [toast, setToast] = useState<Toast>(null);
+  const [sharing, setSharing] = useState(false);
 
   const code = params.get('a') ?? '';
   const answers = useMemo(() => (quiz ? decodeAnswers(quiz, code) : {}), [quiz, code]);
@@ -56,15 +58,43 @@ export default function Result() {
   }
 
   async function onShare() {
-    const payload = buildShare(quiz!, result!, resultUrl);
-    const outcome = await shareResult(payload);
-    if (outcome === 'shared') {
-      trackEvent('result_shared', { quiz: quiz!.slug, score: result!.score });
-    } else if (outcome === 'copied') {
-      trackEvent('result_shared', { quiz: quiz!.slug, score: result!.score, via: 'clipboard' });
-      flash('Result copied — paste it anywhere!');
-    } else if (outcome === 'failed') {
-      flash('Could not share. Try Copy Link.');
+    if (sharing) return;
+    setSharing(true);
+    try {
+      const payload = buildShare(quiz!, result!, resultUrl);
+
+      // Try to share/copy an image of the passport card (link is on the card).
+      const node = cardRef.current;
+      if (node) {
+        const blob = await captureNode(node, '#ffffff');
+        if (blob) {
+          const out = await shareImage(blob, payload);
+          if (out === 'shared') {
+            trackEvent('result_shared', { quiz: quiz!.slug, score: result!.score, via: 'image' });
+            return;
+          }
+          if (out === 'copied') {
+            trackEvent('result_shared', { quiz: quiz!.slug, score: result!.score, via: 'image' });
+            flash('Result image copied — paste it into your chat!');
+            return;
+          }
+          if (out === 'dismissed') return;
+          // out === 'failed' → fall through to text sharing
+        }
+      }
+
+      // Fallback: native text share, then clipboard text.
+      const outcome = await shareResult(payload);
+      if (outcome === 'shared') {
+        trackEvent('result_shared', { quiz: quiz!.slug, score: result!.score });
+      } else if (outcome === 'copied') {
+        trackEvent('result_shared', { quiz: quiz!.slug, score: result!.score, via: 'clipboard' });
+        flash('Result link copied — paste it anywhere!');
+      } else if (outcome === 'failed') {
+        flash('Could not share. Try Copy Link.');
+      }
+    } finally {
+      setSharing(false);
     }
   }
 
@@ -152,7 +182,9 @@ export default function Result() {
           Your Internet Passport
         </h2>
         <PassportCard ref={cardRef} result={result} quizName={quiz.name} />
-        <p className="mt-2 text-center text-xs text-muted">📸 Screenshot this to share it</p>
+        <p className="mt-2 text-center text-xs text-muted">
+          📸 “Share result” copies this card as an image
+        </p>
       </section>
 
       {/* Share actions */}
@@ -160,9 +192,10 @@ export default function Result() {
         <button
           type="button"
           onClick={onShare}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-forest px-6 py-4 text-lg font-semibold text-cream transition-colors duration-150 hover:bg-forest-dark active:scale-[0.99]"
+          disabled={sharing}
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-forest px-6 py-4 text-lg font-semibold text-cream transition-colors duration-150 hover:bg-forest-dark active:scale-[0.99] disabled:opacity-70"
         >
-          Share result
+          {sharing ? 'Preparing image…' : 'Share result'}
         </button>
         <div className="grid grid-cols-2 gap-3">
           <button

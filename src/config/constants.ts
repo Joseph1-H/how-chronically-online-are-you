@@ -9,7 +9,7 @@ export const SITE_NAME = 'QuizLab';
  * Canonical site URL used in share text and links. No trailing slash.
  * Update this to your real domain after deploying.
  */
-export const SITE_URL = 'https://onlinetest.vercel.app';
+export const SITE_URL = 'https://onlinetestquiz.vercel.app';
 
 /**
  * Optional hosted donation link (Ko-fi, Buy Me a Coffee, Stripe, GitHub

@@ -25,6 +25,41 @@ export function quizUrl(quiz: Quiz): string {
 export type ShareOutcome = 'shared' | 'copied' | 'dismissed' | 'failed';
 
 /**
+ * Share a PNG of the result: native share sheet with the image file where
+ * supported (mostly mobile), otherwise copy the image to the clipboard.
+ * The site link lives on the card itself, and is also appended to the share
+ * text for the native-share path. Returns 'failed' so callers can fall back.
+ */
+export async function shareImage(blob: Blob, payload: SharePayload): Promise<ShareOutcome> {
+  const file = new File([blob], 'chronically-online.png', { type: 'image/png' });
+  const nav = navigator as Navigator & {
+    share?: (data: ShareData) => Promise<void>;
+    canShare?: (data: ShareData) => boolean;
+  };
+
+  if (typeof nav.share === 'function' && nav.canShare?.({ files: [file] })) {
+    try {
+      await nav.share({ files: [file], text: `${payload.text}\n${payload.url}` });
+      return 'shared';
+    } catch (err) {
+      if (err instanceof DOMException && err.name === 'AbortError') return 'dismissed';
+      // fall through to clipboard
+    }
+  }
+
+  try {
+    if (navigator.clipboard && 'write' in navigator.clipboard && typeof ClipboardItem !== 'undefined') {
+      await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+      return 'copied';
+    }
+  } catch {
+    // fall through
+  }
+
+  return 'failed';
+}
+
+/**
  * Share via the Web Share API when available, otherwise copy a nicely
  * formatted string to the clipboard. Returns what actually happened so the UI
  * can show the right confirmation.
