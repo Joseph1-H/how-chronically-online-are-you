@@ -37,4 +37,8 @@ export interface CryptoWallet {
  *   { coin: 'ETH', label: 'Ethereum (ERC-20)', address: '0xYOUR_ADDRESS' },
  *   { coin: 'BTC', label: 'Bitcoin', address: 'bc1YOUR_ADDRESS' },
  */
-export const CRYPTO_WALLETS: CryptoWallet[] = [];
+export const CRYPTO_WALLETS: CryptoWallet[] = [
+  { coin: 'SOL', label: 'Solana', address: 'zAVwcqpag3mkDRfivC7iBJhEKE7jzP6A3qLxYyNDsYg' },
+  { coin: 'ETH', label: 'Ethereum (ERC-20)', address: '0x34cec447E34ede433B4547f2F4E22a3D78d20407' },
+  { coin: 'BTC', label: 'Bitcoin', address: 'bc1qsay9qwgyhjdnzpzg4lp3yeth0ucgc0f58wutap' },
+];
