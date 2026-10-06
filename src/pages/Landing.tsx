@@ -86,7 +86,7 @@ export default function Landing() {
 
       {/* Hero */}
       <main id="top">
-        <section className="py-12 text-center sm:py-20">
+        <section className="pt-10 pb-40 text-center sm:pt-16 sm:pb-56">
           <div className="mx-auto max-w-3xl animate-fade-up">
             <span className="inline-flex items-center gap-2 rounded-full border border-edge bg-white px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-muted">
               <span className="h-1.5 w-1.5 rounded-full bg-brick" aria-hidden="true" />
