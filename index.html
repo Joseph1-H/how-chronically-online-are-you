@@ -7,11 +7,17 @@
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
     <!-- Primary SEO -->
-    <title>How Chronically Online Are You? | Take the Quiz</title>
+    <title>How Chronically Online Are You? Free Internet Culture Quiz</title>
     <meta
       name="description"
-      content="Take the 2-minute internet culture quiz and find out how chronically online you really are."
+      content="Take the free 2-minute 'How Chronically Online Are You?' quiz — 20 questions, 20 internet archetypes, meme & slang stats, and a shareable result. Find out how terminally online you really are."
     />
+    <meta
+      name="keywords"
+      content="chronically online quiz, how chronically online are you, internet culture quiz, terminally online test, internet archetype quiz, are you chronically online, brainrot quiz"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="author" content="QuizLab" />
     <link rel="canonical" href="https://onlinetestquiz.vercel.app/" />
 
     <!-- Open Graph -->
@@ -43,9 +49,78 @@
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Structured data: WebSite + WebPage + FAQ (rich results) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://onlinetestquiz.vercel.app/#website",
+            "url": "https://onlinetestquiz.vercel.app/",
+            "name": "QuizLab",
+            "description": "Fun, shareable internet culture quizzes.",
+            "inLanguage": "en"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://onlinetestquiz.vercel.app/#webpage",
+            "url": "https://onlinetestquiz.vercel.app/",
+            "name": "How Chronically Online Are You? Free Internet Culture Quiz",
+            "isPartOf": { "@id": "https://onlinetestquiz.vercel.app/#website" },
+            "description": "Take the free 2-minute internet culture quiz and find out how chronically online you really are. 20 questions, 20 archetypes, instant shareable result.",
+            "inLanguage": "en",
+            "primaryImageOfPage": "https://onlinetestquiz.vercel.app/og-image.svg"
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Is this a real psychological test?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. It is a just-for-fun internet culture quiz, not a psychological assessment."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Do you collect my data?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No login, no email, no tracking. Everything runs in your browser and your answers never leave your device."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How long does the quiz take?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "About two minutes — twenty questions, four choices each, with an instant result."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- No-JS / first-paint fallback so crawlers always have core content -->
+      <noscript>
+        <main style="max-width: 640px; margin: 0 auto; padding: 24px; font-family: sans-serif">
+          <h1>How Chronically Online Are You?</h1>
+          <p>
+            A free, just-for-fun internet culture quiz. Answer 20 questions in about two minutes and
+            find out how chronically online you really are — with your own internet archetype, meme
+            and slang stats, and a shareable result card. No login, no tracking.
+          </p>
+          <p>Please enable JavaScript to take the quiz.</p>
+        </main>
+      </noscript>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
