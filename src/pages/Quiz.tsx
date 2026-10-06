@@ -2,7 +2,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getQuiz } from '../data/quizzes';
 import type { AnswerMap } from '../lib/scoring';
-import { encodeAnswers } from '../lib/scoring';
+import type { Question } from '../types/quiz';
+import { encodeAnswers, pickAttemptQuestions } from '../lib/scoring';
 import { trackEvent } from '../lib/analytics';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
 import ProgressBar from '../components/ProgressBar';
@@ -19,6 +20,8 @@ export default function Quiz() {
   const [answers, setAnswers] = useState<AnswerMap>({});
   const [pendingId, setPendingId] = useState<string | null>(null);
   const [leaving, setLeaving] = useState(false);
+  // A random subset in random order, chosen once per attempt (per mount).
+  const [attempt] = useState<Question[]>(() => (quiz ? pickAttemptQuestions(quiz) : []));
 
   useDocumentMeta({
     title: quiz ? `${quiz.title} | ${quiz.name}` : 'Quiz',
@@ -31,8 +34,8 @@ export default function Quiz() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quiz?.slug]);
 
-  const question = quiz?.questions[index];
-  const total = quiz?.questions.length ?? 0;
+  const question = attempt[index];
+  const total = attempt.length;
 
   const goToResult = useCallback(
     (finalAnswers: AnswerMap) => {

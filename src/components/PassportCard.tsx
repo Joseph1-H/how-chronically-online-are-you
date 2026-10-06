@@ -65,6 +65,21 @@ const PassportCard = forwardRef<HTMLDivElement, PassportCardProps>(function Pass
         <p className="mt-3 text-sm leading-relaxed text-ink/80">{tier.description}</p>
       </div>
 
+      {/* Signature move + spirit platform */}
+      <div className="grid grid-cols-2 gap-2 p-2 pb-0">
+        {[
+          { tag: 'Signature move', value: result.signature.label, emoji: result.signature.emoji },
+          { tag: 'Spirit platform', value: result.platform.label, emoji: result.platform.emoji },
+        ].map((row) => (
+          <div key={row.tag} className="rounded-2xl border border-edge bg-white p-3">
+            <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-wide text-muted">
+              <span>{row.emoji}</span> {row.tag}
+            </div>
+            <div className="mt-0.5 truncate text-sm font-semibold text-ink">{row.value}</div>
+          </div>
+        ))}
+      </div>
+
       {/* Stats */}
       <div className="space-y-3 p-4">
         {cardStats.map((t) => (

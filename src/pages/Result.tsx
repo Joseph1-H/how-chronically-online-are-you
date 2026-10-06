@@ -1,7 +1,7 @@
 import { useMemo, useRef, useState } from 'react';
 import { Link, Navigate, useParams, useSearchParams } from 'react-router-dom';
 import { getQuiz } from '../data/quizzes';
-import { computeResult, decodeAnswers, isComplete } from '../lib/scoring';
+import { computeResult, decodeAnswers, hasEnoughAnswers } from '../lib/scoring';
 import { buildShare, copyText, shareResult } from '../lib/share';
 import { trackEvent } from '../lib/analytics';
 import { SITE_NAME, SUPPORT_URL } from '../config/constants';
@@ -25,10 +25,10 @@ export default function Result() {
 
   const code = params.get('a') ?? '';
   const answers = useMemo(() => (quiz ? decodeAnswers(quiz, code) : {}), [quiz, code]);
-  const complete = quiz ? isComplete(quiz, answers) : false;
+  const valid = quiz ? hasEnoughAnswers(quiz, answers) : false;
   const result = useMemo(
-    () => (quiz && complete ? computeResult(quiz, answers) : null),
-    [quiz, complete, answers],
+    () => (quiz && valid ? computeResult(quiz, answers) : null),
+    [quiz, valid, answers],
   );
 
   useDocumentMeta({
@@ -101,6 +101,31 @@ export default function Result() {
           {tier.description}
         </p>
       </div>
+
+      {/* Signature move + spirit platform */}
+      <section
+        className="mt-8 grid animate-fade-up gap-3 sm:grid-cols-2"
+        style={{ animationDelay: '460ms' }}
+        aria-label="Your internet profile"
+      >
+        {[
+          { tag: 'Signature move', value: result.signature.label, emoji: result.signature.emoji },
+          { tag: 'Spirit platform', value: result.platform.label, emoji: result.platform.emoji },
+        ].map((row) => (
+          <div
+            key={row.tag}
+            className="flex items-center gap-3 rounded-2xl border border-edge bg-white p-3"
+          >
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cream text-xl">
+              {row.emoji}
+            </div>
+            <div className="min-w-0">
+              <div className="text-xs font-medium uppercase tracking-wide text-muted">{row.tag}</div>
+              <div className="truncate text-base font-semibold text-ink">{row.value}</div>
+            </div>
+          </div>
+        ))}
+      </section>
 
       {/* Full stat breakdown */}
       <section

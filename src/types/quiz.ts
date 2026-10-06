@@ -17,6 +17,18 @@ export interface TraitDef {
    * scale contribute LOW values here. Used for "Touching Grass".
    */
   invert?: boolean;
+  /**
+   * If present, this trait can become the user's "Signature move" when it is
+   * their dominant trait. e.g. Doomscrolling → "Doomscrolling" 📰.
+   */
+  signature?: { label: string; emoji: string };
+}
+
+/** A platform the quiz can crown as the user's "Spirit platform". */
+export interface PlatformDef {
+  id: string;
+  label: string;
+  emoji: string;
 }
 
 /** One selectable answer. */
@@ -30,6 +42,11 @@ export interface AnswerOption {
    * trait across answered questions and normalized to 0–100 at the end.
    */
   traits?: Record<string, number>;
+  /**
+   * Optional platform this answer signals affinity for (PlatformDef id).
+   * Weighted by `points`, used to pick the "Spirit platform".
+   */
+  platform?: string;
 }
 
 /** One quiz question. */
@@ -75,6 +92,14 @@ export interface Quiz {
   questions: Question[];
   traits: TraitDef[];
   tiers: ResultTier[];
+  /** Platform catalog for the "Spirit platform" result. */
+  platforms?: PlatformDef[];
+  /**
+   * How many questions to ask per attempt. If fewer than the pool size, each
+   * attempt serves a random subset. Questions are always shown in random order.
+   * Defaults to the full pool.
+   */
+  questionsPerQuiz?: number;
   /** Whether this quiz is live in the registry UI. */
   published: boolean;
 }
@@ -86,4 +111,8 @@ export interface QuizResult {
   tier: ResultTier;
   /** Normalized trait values, 0–100, in the order quiz.traits defines them. */
   traits: Array<{ id: string; label: string; value: number }>;
+  /** The user's dominant habit, derived from their strongest trait. */
+  signature: { label: string; emoji: string };
+  /** The platform the user signalled the most affinity for. */
+  platform: { label: string; emoji: string };
 }
