@@ -3,6 +3,7 @@ import { getFeaturedQuiz } from '../data/quizzes';
 import { SITE_NAME } from '../config/constants';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
 import CryptoDonate from '../components/CryptoDonate';
+import { Logo } from '../components/Logo';
 
 const NAV = [
   { label: 'How it works', id: 'how' },
@@ -54,14 +55,13 @@ export default function Landing() {
     <div className="mx-auto max-w-6xl px-5">
       {/* Nav */}
       <header className="flex items-center justify-between py-5">
-        <a href="#top" className="flex items-center gap-2 font-bold tracking-tight text-ink">
-          <span className="flex h-7 w-7 items-center justify-center rounded-md bg-forest text-sm text-cream">
-            ◆
-          </span>
-          <span className="text-lg">
-            quiz<span className="text-brick">lab</span>
-          </span>
-        </a>
+        <button
+          type="button"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label="QuizLab — back to top"
+        >
+          <Logo />
+        </button>
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
           {NAV.map((item) => (
