@@ -16,16 +16,17 @@ export default {
         mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       colors: {
-        // Editorial light palette (12axes-inspired).
-        cream: '#f4f2ea',
-        ink: '#1b1a16',
-        muted: '#6c6b61',
-        forest: '#1c3b2e',
-        'forest-dark': '#16311f',
-        brick: '#8f2d2d',
-        edge: '#e4e0d3',
-        lav: '#e5e8f5',
-        'lav-ink': '#2a3356',
+        // Playful light palette — violet primary + coral accent on soft lilac.
+        // (Token names kept stable; only the values changed.)
+        cream: '#f5f4fb',
+        ink: '#17151f',
+        muted: '#6b6878',
+        forest: '#5b3df5',
+        'forest-dark': '#4a2fd6',
+        brick: '#ff4d6d',
+        edge: '#e7e4f2',
+        lav: '#ece9fb',
+        'lav-ink': '#2d2660',
       },
       keyframes: {
         'fade-up': {

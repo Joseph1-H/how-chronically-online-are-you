@@ -4,29 +4,6 @@ import { SITE_NAME } from '../config/constants';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
 import CryptoDonate from '../components/CryptoDonate';
 
-/** Small circular progress ring for the static example-result card. */
-function MiniRing({ value }: { value: number }) {
-  const r = 26;
-  const c = 2 * Math.PI * r;
-  const offset = c - (value / 100) * c;
-  return (
-    <svg viewBox="0 0 64 64" className="h-16 w-16 -rotate-90" aria-hidden="true">
-      <circle cx="32" cy="32" r={r} fill="none" stroke="#c9d0ea" strokeWidth="6" />
-      <circle
-        cx="32"
-        cy="32"
-        r={r}
-        fill="none"
-        stroke="#2a3356"
-        strokeWidth="6"
-        strokeLinecap="round"
-        strokeDasharray={c}
-        strokeDashoffset={offset}
-      />
-    </svg>
-  );
-}
-
 const NAV = [
   { label: 'How it works', id: 'how' },
   { label: 'Archetypes', id: 'archetypes' },
@@ -109,37 +86,39 @@ export default function Landing() {
 
       {/* Hero */}
       <main id="top">
-        <section className="grid items-center gap-10 py-10 sm:py-16 lg:grid-cols-2 lg:gap-16">
-          {/* Left: copy */}
-          <div className="animate-fade-up">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brick">
-              — Internet discovery
-            </p>
-            <h1 className="mt-5 text-5xl font-bold leading-[1.02] tracking-tight text-ink sm:text-6xl">
+        <section className="py-12 text-center sm:py-20">
+          <div className="mx-auto max-w-3xl animate-fade-up">
+            <span className="inline-flex items-center gap-2 rounded-full border border-edge bg-white px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-muted">
+              <span className="h-1.5 w-1.5 rounded-full bg-brick" aria-hidden="true" />
+              Internet culture quiz
+            </span>
+
+            <h1 className="mt-6 text-5xl font-extrabold leading-[1.0] tracking-tight text-ink sm:text-7xl">
               How chronically <span className="text-brick">online</span> are you?
             </h1>
-            <p className="mt-6 max-w-md text-lg leading-relaxed text-muted">
-              There&rsquo;s normal online… and then there&rsquo;s you. In two minutes, find your
-              internet archetype, your worst habit, and just how deep the algorithm has you.
+
+            <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-muted">
+              There&rsquo;s normal online… and then there&rsquo;s you. 20 questions, two minutes, and
+              one brutally honest internet archetype.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Link
                 to={takeHref}
-                className="inline-flex items-center gap-2 rounded-full bg-forest px-7 py-3.5 text-base font-semibold text-cream transition-colors hover:bg-forest-dark"
+                className="inline-flex items-center gap-2 rounded-full bg-forest px-8 py-4 text-base font-semibold text-cream shadow-lg shadow-forest/25 transition-transform duration-150 hover:scale-[1.03] active:scale-95"
               >
                 Take the test <span aria-hidden="true">→</span>
               </Link>
               <button
                 type="button"
                 onClick={() => scrollToId('archetypes')}
-                className="inline-flex items-center gap-2 rounded-full border border-ink/15 px-7 py-3.5 text-base font-semibold text-ink transition-colors hover:border-ink/40"
+                className="inline-flex items-center gap-2 rounded-full border border-ink/15 bg-white px-8 py-4 text-base font-semibold text-ink transition-colors hover:border-ink/40"
               >
-                See the archetypes
+                See the 20 archetypes
               </button>
             </div>
 
-            <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
+            <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-muted">
               {['Free', 'No sign-up', '2 minutes', 'Instant result'].map((f) => (
                 <li key={f} className="flex items-center gap-2">
                   <span className="h-1.5 w-1.5 rounded-full bg-brick" aria-hidden="true" />
@@ -149,63 +128,41 @@ export default function Landing() {
             </ul>
           </div>
 
-          {/* Right: example result card */}
-          <div className="animate-fade-up lg:justify-self-end" style={{ animationDelay: '120ms' }}>
-            <div className="w-full max-w-md rounded-3xl border border-edge bg-white p-2 shadow-[0_24px_60px_-28px_rgba(27,26,22,0.3)]">
-              <p className="px-4 pt-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted">
-                ● Example result
-              </p>
-
-              <div className="mt-2 rounded-2xl bg-lav p-5">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <span className="inline-block rounded-full bg-lav-ink px-3 py-1 text-xs font-semibold text-white">
-                      High score
-                    </span>
-                    <h2 className="mt-3 text-3xl font-bold leading-tight text-lav-ink">
-                      Chronically Online
-                    </h2>
-                  </div>
-                  <div className="relative shrink-0">
-                    <MiniRing value={87} />
-                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <span className="text-base font-bold leading-none text-lav-ink">87%</span>
-                      <span className="text-[9px] font-semibold uppercase tracking-wide text-lav-ink/70">
-                        online
-                      </span>
-                    </div>
-                  </div>
+          {/* The online-o-meter */}
+          <div
+            className="mx-auto mt-16 max-w-2xl animate-fade-up"
+            style={{ animationDelay: '140ms' }}
+          >
+            <div className="mb-3 flex items-center justify-between text-sm font-semibold text-ink">
+              <span>🌱 Touch grass</span>
+              <span>Terminally online 👁️</span>
+            </div>
+            <div className="relative">
+              <div
+                className="h-5 rounded-full"
+                style={{
+                  background: 'linear-gradient(90deg,#34d399,#fbbf24,#ff4d6d,#5b3df5)',
+                }}
+              />
+              <div
+                className="absolute -top-2.5 animate-float"
+                style={{ left: '74%', transform: 'translateX(-50%)' }}
+              >
+                <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-ink bg-white text-lg shadow-md">
+                  📍
                 </div>
               </div>
-
-              <div className="space-y-2 p-2">
-                {[
-                  { tag: 'Signature move', value: 'Doomscrolling', emoji: '📰' },
-                  { tag: 'Spirit platform', value: 'TikTok', emoji: '🎵' },
-                ].map((row) => (
-                  <div
-                    key={row.tag}
-                    className="flex items-center gap-3 rounded-2xl border border-edge bg-white p-3"
-                  >
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-cream text-xl">
-                      {row.emoji}
-                    </div>
-                    <div>
-                      <div className="text-xs font-medium uppercase tracking-wide text-muted">
-                        {row.tag}
-                      </div>
-                      <div className="text-base font-semibold text-ink">{row.value}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
+            <p className="mt-6 text-sm text-muted">
+              Everyone lands somewhere on the spectrum.{' '}
+              <span className="font-semibold text-ink">Where do you?</span>
+            </p>
           </div>
         </section>
 
         {/* How it works */}
         <section id="how" className="scroll-mt-20 border-t border-edge py-16">
-          <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-brick">
+          <h2 className="inline-block rounded-full bg-brick/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-brick">
             How it works
           </h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-3">
@@ -223,7 +180,7 @@ export default function Landing() {
         <section id="archetypes" className="scroll-mt-20 border-t border-edge py-16">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-brick">
+              <h2 className="inline-block rounded-full bg-brick/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-brick">
                 The archetypes
               </h2>
               <p className="mt-2 max-w-lg text-muted">
@@ -254,7 +211,7 @@ export default function Landing() {
 
         {/* FAQ */}
         <section id="faq" className="scroll-mt-20 border-t border-edge py-16">
-          <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-brick">FAQ</h2>
+          <h2 className="inline-block rounded-full bg-brick/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-brick">FAQ</h2>
           <div className="mt-8 max-w-2xl divide-y divide-edge">
             {FAQ.map((item) => (
               <div key={item.q} className="py-5">

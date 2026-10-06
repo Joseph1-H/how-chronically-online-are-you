@@ -9,7 +9,7 @@ interface PassportCardProps {
 }
 
 /** Fixed data color so the card reads cleanly in light mode and as a screenshot. */
-const DATA_COLOR = '#2a3356';
+const DATA_COLOR = '#5b3df5';
 
 /**
  * "Your Internet Passport" — the screenshot-optimized card. Light, editorial,

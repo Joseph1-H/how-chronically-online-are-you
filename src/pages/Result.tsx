@@ -14,7 +14,7 @@ import PassportCard from '../components/PassportCard';
 type Toast = { msg: string } | null;
 
 /** Fixed data color for the score ring + stat bars (clean on the light theme). */
-const DATA_COLOR = '#2a3356';
+const DATA_COLOR = '#5b3df5';
 
 export default function Result() {
   const { slug } = useParams();

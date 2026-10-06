@@ -12,8 +12,8 @@ html {
 
 body {
   margin: 0;
-  background-color: #f4f2ea;
-  color: #1b1a16;
+  background-color: #f5f4fb;
+  color: #17151f;
   font-family: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -27,16 +27,16 @@ body {
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(70% 50% at 85% 0%, rgba(28, 59, 46, 0.05), transparent 60%),
-    radial-gradient(60% 50% at 0% 100%, rgba(143, 45, 45, 0.04), transparent 60%),
-    #f4f2ea;
+    radial-gradient(70% 55% at 82% -5%, rgba(91, 61, 245, 0.08), transparent 60%),
+    radial-gradient(60% 50% at 0% 100%, rgba(255, 77, 109, 0.06), transparent 60%),
+    #f5f4fb;
 }
 
 /* Thin scrollbar on desktop. */
 @media (pointer: fine) {
   * {
     scrollbar-width: thin;
-    scrollbar-color: #d8d4c6 transparent;
+    scrollbar-color: #d6d2ea transparent;
   }
 }
 
@@ -53,7 +53,7 @@ body {
 
 /* Clear, consistent keyboard focus ring. */
 :focus-visible {
-  outline: 2px solid #1c3b2e;
+  outline: 2px solid #5b3df5;
   outline-offset: 2px;
   border-radius: 6px;
 }
