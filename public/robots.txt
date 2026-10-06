@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://joseph1-h.github.io/how-chronically-online-are-you/sitemap.xml
+Sitemap: https://onlinetest.vercel.app/sitemap.xml
