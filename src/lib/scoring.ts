@@ -130,17 +130,21 @@ export function computeResult(quiz: Quiz, answers: AnswerMap): QuizResult {
 
   const score = maxMain === 0 ? 0 : Math.round((gained / maxMain) * 100);
 
-  const traits = quiz.traits.map((t) => ({
+  // All traits (incl. hidden) — used for signature selection.
+  const allTraits = quiz.traits.map((t) => ({
     id: t.id,
     label: t.label,
     value: traitMax[t.id] === 0 ? 0 : Math.round((traitGained[t.id] / traitMax[t.id]) * 100),
   }));
 
+  // Hidden traits don't appear as stat bars.
+  const hidden = new Set(quiz.traits.filter((t) => t.hidden).map((t) => t.id));
+
   return {
     score: clamp(score, 0, 100),
     tier: tierForScore(quiz, score),
-    traits,
-    signature: computeSignature(quiz, traits),
+    traits: allTraits.filter((t) => !hidden.has(t.id)),
+    signature: computeSignature(quiz, allTraits),
     platform: computePlatform(quiz, answers),
   };
 }

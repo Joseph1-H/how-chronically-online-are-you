@@ -28,6 +28,31 @@ export const chronicallyOnline: Quiz = {
     { id: 'sl', label: 'Slang Fluency', signature: { label: 'Fluent in brainrot', emoji: '🗣️' } },
     { id: 'ds', label: 'Doomscrolling', signature: { label: 'Doomscrolling', emoji: '📰' } },
     { id: 'tg', label: 'Touching Grass' },
+    // Hidden traits — feed signature moves only (not shown as stat bars).
+    {
+      id: 'ar',
+      label: 'Arguing',
+      hidden: true,
+      signature: { label: 'Starting fights in the replies', emoji: '🥊' },
+    },
+    {
+      id: 'ps',
+      label: 'Parasocial',
+      hidden: true,
+      signature: { label: 'Parasocial devotion', emoji: '🥺' },
+    },
+    {
+      id: 'lk',
+      label: 'Lurking',
+      hidden: true,
+      signature: { label: 'Professional lurking', emoji: '🫥' },
+    },
+    {
+      id: 'ir',
+      label: 'Irony',
+      hidden: true,
+      signature: { label: 'Terminal irony poisoning', emoji: '🙃' },
+    },
   ],
 
   platforms: [
@@ -275,7 +300,7 @@ export const chronicallyOnline: Quiz = {
       prompt: 'Your relationship with Reddit is best described as…',
       options: [
         { id: 'a', label: "What's a subreddit?", points: 0, traits: { me: 0, tg: 3 } },
-        { id: 'b', label: 'I lurk sometimes.', points: 1, traits: { me: 1, tg: 2 }, platform: 'reddit' },
+        { id: 'b', label: 'I lurk sometimes.', points: 1, traits: { me: 1, tg: 2, lk: 2 }, platform: 'reddit' },
         {
           id: 'c',
           label: "I have a comment history I'd never show anyone.",
@@ -419,8 +444,8 @@ export const chronicallyOnline: Quiz = {
       options: [
         { id: 'a', label: "I wouldn't even notice.", points: 0, traits: { tg: 3 } },
         { id: 'b', label: 'Mildly curious.', points: 1, traits: { tg: 2 } },
-        { id: 'c', label: 'Genuinely concerned for them.', points: 2, traits: { ds: 1, tg: 1 } },
-        { id: 'd', label: 'Personally abandoned.', points: 3, traits: { ds: 2, tg: 0 } },
+        { id: 'c', label: 'Genuinely concerned for them.', points: 2, traits: { ds: 1, tg: 1, ps: 2 } },
+        { id: 'd', label: 'Personally abandoned.', points: 3, traits: { ds: 2, tg: 0, ps: 3 } },
       ],
     },
     {
@@ -434,13 +459,13 @@ export const chronicallyOnline: Quiz = {
           id: 'c',
           label: 'References nobody around me gets.',
           points: 2,
-          traits: { me: 2, sl: 1, tg: 1 },
+          traits: { me: 2, sl: 1, tg: 1, ir: 1 },
         },
         {
           id: 'd',
           label: 'Layers of irony that require a footnote.',
           points: 3,
-          traits: { me: 3, sl: 2, tg: 0 },
+          traits: { me: 3, sl: 2, tg: 0, ir: 3 },
         },
       ],
     },
@@ -455,13 +480,13 @@ export const chronicallyOnline: Quiz = {
           id: 'c',
           label: 'Reply, then refresh for the response.',
           points: 2,
-          traits: { ds: 2, tg: 1 },
+          traits: { ds: 2, tg: 1, ar: 2 },
         },
         {
           id: 'd',
           label: 'Already have screenshots and receipts ready.',
           points: 3,
-          traits: { ds: 3, tg: 0 },
+          traits: { ds: 3, tg: 0, ar: 3 },
         },
       ],
     },
@@ -525,12 +550,12 @@ export const chronicallyOnline: Quiz = {
       options: [
         { id: 'a', label: 'One, obviously.', points: 0, traits: { tg: 3 } },
         { id: 'b', label: 'A main and a backup.', points: 1, traits: { tg: 2 } },
-        { id: 'c', label: 'Main, finsta, and a lurk account.', points: 2, traits: { tg: 1 } },
+        { id: 'c', label: 'Main, finsta, and a lurk account.', points: 2, traits: { tg: 1, lk: 2 } },
         {
           id: 'd',
           label: "Accounts my closest friends don't know about.",
           points: 3,
-          traits: { ds: 1, tg: 0 },
+          traits: { ds: 1, tg: 0, lk: 3 },
         },
       ],
     },
@@ -541,12 +566,12 @@ export const chronicallyOnline: Quiz = {
       options: [
         { id: 'a', label: "I mean it's good.", points: 0, traits: { sl: 0, tg: 3 } },
         { id: 'b', label: 'Usually genuine.', points: 1, traits: { sl: 1, tg: 2 } },
-        { id: 'c', label: 'Could be either. Depends.', points: 2, traits: { sl: 2, tg: 1 } },
+        { id: 'c', label: 'Could be either. Depends.', points: 2, traits: { sl: 2, tg: 1, ir: 2 } },
         {
           id: 'd',
           label: 'Sincerity died years ago. Everything is a bit.',
           points: 3,
-          traits: { sl: 3, tg: 0 },
+          traits: { sl: 3, tg: 0, ir: 3 },
         },
       ],
     },
@@ -614,14 +639,14 @@ export const chronicallyOnline: Quiz = {
           id: 'c',
           label: 'A post I draft and then delete.',
           points: 2,
-          traits: { ds: 1, tg: 1 },
+          traits: { ds: 1, tg: 1, ar: 2 },
           platform: 'twitter',
         },
         {
           id: 'd',
           label: 'Posted. Then quote-tweeting myself for reach.',
           points: 3,
-          traits: { ds: 2, sl: 1, tg: 0 },
+          traits: { ds: 2, sl: 1, tg: 0, ar: 3 },
           platform: 'twitter',
         },
       ],
@@ -631,7 +656,7 @@ export const chronicallyOnline: Quiz = {
       topic: 'instagram',
       prompt: 'Your Instagram story situation is…',
       options: [
-        { id: 'a', label: "I don't post stories.", points: 0, traits: { tg: 3 } },
+        { id: 'a', label: "I don't post stories.", points: 0, traits: { tg: 3, lk: 2 } },
         {
           id: 'b',
           label: 'The occasional life update.',
@@ -758,14 +783,14 @@ export const chronicallyOnline: Quiz = {
           id: 'c',
           label: 'A daily ritual, honestly.',
           points: 2,
-          traits: { ds: 1, tg: 1 },
+          traits: { ds: 1, tg: 1, ps: 2 },
           platform: 'twitch',
         },
         {
           id: 'd',
           label: 'I have channel points and a parasocial favorite.',
           points: 3,
-          traits: { ds: 2, tg: 0 },
+          traits: { ds: 2, tg: 0, ps: 3 },
           platform: 'twitch',
         },
       ],

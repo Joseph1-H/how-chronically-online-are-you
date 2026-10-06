@@ -22,6 +22,11 @@ export interface TraitDef {
    * their dominant trait. e.g. Doomscrolling → "Doomscrolling" 📰.
    */
   signature?: { label: string; emoji: string };
+  /**
+   * Hidden traits feed signature-move selection but are NOT shown as stat bars.
+   * Used for extra signature variety without cluttering the card.
+   */
+  hidden?: boolean;
 }
 
 /** A platform the quiz can crown as the user's "Spirit platform". */
