@@ -82,7 +82,7 @@ const PassportCard = forwardRef<HTMLDivElement, PassportCardProps>(function Pass
             <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-wide text-muted">
               <span>{row.emoji}</span> {row.tag}
             </div>
-            <div className="mt-1 overflow-hidden text-ellipsis whitespace-nowrap text-sm font-semibold leading-6 text-ink">
+            <div className="mt-1 whitespace-nowrap text-sm font-semibold leading-6 text-ink">
               {row.value}
             </div>
           </div>
