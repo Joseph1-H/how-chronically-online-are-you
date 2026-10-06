@@ -1,19 +1,23 @@
-import { toBlob } from 'html-to-image';
+import html2canvas from 'html2canvas';
 
 /**
- * Render a DOM node to a PNG Blob (2x for crispness). Returns null on failure
- * so callers can fall back to text sharing. Retries with fonts skipped if the
- * first pass trips on cross-origin web fonts.
+ * Render a DOM node to a PNG Blob (2x for crispness). Uses html2canvas, which
+ * paints the element's real laid-out boxes — so wrapped text stays where it is
+ * (unlike foreignObject-based tools that re-flow and overlap). Returns null on
+ * failure so callers can fall back to text sharing.
  */
 export async function captureNode(node: HTMLElement, backgroundColor: string): Promise<Blob | null> {
-  const base = { pixelRatio: 2, backgroundColor, cacheBust: true };
   try {
-    return await toBlob(node, base);
+    const canvas = await html2canvas(node, {
+      scale: 2,
+      backgroundColor,
+      useCORS: true,
+      logging: false,
+    });
+    return await new Promise<Blob | null>((resolve) =>
+      canvas.toBlob((b) => resolve(b), 'image/png'),
+    );
   } catch {
-    try {
-      return await toBlob(node, { ...base, skipFonts: true });
-    } catch {
-      return null;
-    }
+    return null;
   }
 }
