@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import Landing from './pages/Landing';
 import Quiz from './pages/Quiz';
 import Result from './pages/Result';
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/quiz" element={<Navigate to={`/quiz/${FEATURED_QUIZ_SLUG}`} replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <Analytics />
     </div>
   );
 }
